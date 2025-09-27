@@ -1,33 +1,27 @@
 import socket
 import threading
+from PortScanner.strategies import ScannerStrategy, TCPScannerStrategy, UDPScannerStrategy
 
 class PortScanner:
-    def __init__(self, host):
+    def __init__(self, host, strategy):
+        self.strategy: ScannerStrategy = strategy
         self.host = host
+        self.result = list()
+    
+    def store_ports(self, port):
+        if self.strategy.scan(self.host, port) == True:
+            self.result.append(port)
 
-    def scan(self, port):
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            if s.connect_ex((self.host, port)) == 0:
-                print("Port ouvert : "+str(port))
-
-    def get_standard_ports_range(self):
-        return range(0, 1023)
-    
-    def get_most_used_ports_range(self):
-        return range(1024, 49151)
-    
-    def get_dynamic_private_ports_range(self):
-        return range(49152, 65535)
-    
-    def running_scan(self, range_ports):
+    def running_scan(self):
         threads = []
-        for i in range_ports:
-            thread = threading.Thread(target=self.scan, args=(i,))
+        for i in range(0, 65535+1):
+            thread = threading.Thread(target=self.store_ports, args=(i,))
             threads.append(thread)
             thread.start()
         for thread in threads:
             thread.join()
 
 if __name__ == "__main__":
-    port_scanner = PortScanner("127.0.0.1")
-    port_scanner.running_scan(port_scanner.get_dynamic_private_ports_range())
+    port_scanner = PortScanner("127.0.0.1", TCPScannerStrategy())
+    port_scanner.running_scan()
+    print(port_scanner.result)
