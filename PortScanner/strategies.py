@@ -25,5 +25,6 @@ class TCPScannerStrategy(ScannerStrategy):
 class UDPScannerStrategy(ScannerStrategy):
       def scan(self, host, port) ->bool:
             with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+                s.settimeout(0.2)
                 return s.connect_ex((host, port)) == 0
             
