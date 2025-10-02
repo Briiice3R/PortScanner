@@ -1,16 +1,13 @@
-from PortScanner.scan import PortScanner
-from PortScanner.strategies import TCPScannerStrategy
+# from PortScanner import PortScanner
+# from PortScanner.strategies import TCPScannerStrategy
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-@app.route("/helo")
+@app.route("/")
 def hello():
-    return render_template("hello.html")
+    return render_template("index.html")
 
-@app.route("/b")
-def b():
-    return render_template("hello.html")
 
 # port_scanner = PortScanner("127.0.0.1", TCPScannerStrategy())
 # port_scanner.running_scan()
