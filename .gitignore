@@ -1,11 +1,13 @@
 # Ignorer l'environnement virtuel Python
 .venv/
 web/src/__pycache__/
+PortScanner/__pycache__/
 
 # Ignorer les dépendances et fichiers Node.js dans web/src/
 web/src/node_modules/
 web/src/package-lock.json
 web/src/package.json
+web/src/static/src/output.css
 
 # (Optionnel) Ignorer les fichiers temporaires de l'OS et de l'éditeur
 .DS_Store
