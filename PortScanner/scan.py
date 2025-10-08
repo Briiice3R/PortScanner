@@ -13,7 +13,6 @@ class PortScanner:
     def store_ports(self, port):
         if self.strategy.scan(self.host, port) == True:
             with self.lock:
-                print(port)
                 self.result.append(port)
 
     def running_scan(self):

@@ -15,12 +15,9 @@ def launch_scan():
     if protocol is None or host is None:
         return render_template("index.html")
     else:
-        print("Ici")
         scanner = PortScanner(host, TCPScannerStrategy() if protocol=="TCP" else UDPScannerStrategy())
         scanner.running_scan()
         return render_template("index.html", res=scanner.result)
-
-
 
 # port_scanner = PortScanner("127.0.0.1", TCPScannerStrategy())
 # port_scanner.running_scan()
